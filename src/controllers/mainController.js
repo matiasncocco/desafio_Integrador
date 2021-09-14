@@ -1,8 +1,15 @@
+let db = require('../database/models');
 
 const controlador = {
 
     index: (req,res) => {
-        res.send("Holaaaaa");
+        res.render('../views/home');
+    },
+    listado: (req,res) => {
+        db.Album.findAll()
+         .then(function(albumes){
+             res.render('../views/home' , {peliculas:peliculas});
+         })
     }
 }
 
