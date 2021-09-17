@@ -6,8 +6,7 @@ const controlador = {
         db.Cancion.findAll({
             attributes: 
             [
-                'titulo'
-            
+             'titulo'
             ]
         })
         .then(canciones => {
@@ -16,7 +15,7 @@ const controlador = {
     },
 
     create: function(req, res){
-        let aux = req.body;
+        // let aux = req.body;
         db.Cancion.create({
             titulo: req.body.titulo,
             duracion: req.body.duracion,
@@ -70,6 +69,17 @@ const controlador = {
                 console.log(req.params.id)
             },
 
+     delete: function(req,res){
+                db.Cancion.destroy({
+                    where: {
+                        id: req.params.id
+                    }
+                })
+                .then(cancion => {
+                    return res.json(cancion);
+                })
+            },
+
    //Controlador para "/albumes"
 
     albumList: function(req, res){
@@ -85,6 +95,11 @@ const controlador = {
         })
         .then(albumes => {
             console.log(albumes.canciones);
+
+            // let nombreCanciones = canciones.map(darSoloElTitulo(canciones) => 
+            //     return canciones.titulo: 
+            //     )
+
             res.json(albumes)
         })
         .catch(error =>{
@@ -95,5 +110,3 @@ const controlador = {
 }
 
 module.exports = controlador
-
-
