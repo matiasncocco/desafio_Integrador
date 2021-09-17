@@ -11,6 +11,8 @@ router.post("/", mainController.create)
 
 router.get("/:id", mainController.detail)
 
+router.put("/:id", mainController.edit)
+
 
 module.exports = router 
 

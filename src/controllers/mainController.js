@@ -16,16 +16,27 @@ const controlador = {
     },
 
     create: function(req, res){
-         db.Cancion
-          .create(req.body)
-        .then(cancion => {
+        let aux = req.body;
+        db.Cancion.create({
+            titulo: req.body.titulo,
+            duracion: req.body.duracion,
+            genero_id: req.body.genero_id,
+            artista_id: req.body.artista_id,
+            album_id: req.body.album_id
+        })
+
+          .then(cancion => {
             console.log("Create works!");
-            return res.json(cancion);
-        });
+             res.json(cancion);
+        }).catch(error =>{
+            res.json(error);
+        })
+            
 
     },
+
     detail: function(req,res){
-        db.Cancion.findByPk(req.params.id,{
+         db.Cancion.findByPk(req.params.id,{
             attributes: 
             [
                 'id',
@@ -41,6 +52,46 @@ const controlador = {
                     return res.json(cancion);
                 });
             },
+    
+    edit: function(req,res){
+          db.Cancion.update({
+                titulo: req.body.titulo,
+                duracion: req.body.duracion,
+                album_id: req.body.album_id,
+                genero_id: req.body.genero_id,
+                artista_id: req.body.artista_id
+                },
+                {
+                where: {
+                    id: req.params.id
+                       }
+                }
+                );
+                console.log(req.params.id)
+            },
+
+   //Controlador para "/albumes"
+
+    albumList: function(req, res){
+        db.Album.findAll({
+            attributes: 
+            [
+             'nombre'
+            ],
+            include:[
+              'canciones'
+            ]
+        
+        })
+        .then(albumes => {
+            console.log(albumes.canciones);
+            res.json(albumes)
+        })
+        .catch(error =>{
+            res.json(error);
+        })
+    }
+
 }
 
 module.exports = controlador

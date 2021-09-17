@@ -14,14 +14,17 @@ module.exports = function(sequelize, dataTypes) {
         duracion: {
             type: dataTypes.INTEGER
         },
-        genero_id: {
-            type: dataTypes.INTEGER
+        generoId: {
+            type: dataTypes.INTEGER,
+            field: 'genero_id'
         },
-        artista_id:{
-            type: dataTypes.INTEGER
+        artistaId:{
+            type: dataTypes.INTEGER,
+            field: 'artista_id'
         },
-        album_id:{
-            type: dataTypes.INTEGER
+        albumId:{
+            type: dataTypes.INTEGER,
+            field: 'album_id'
         }
 
     }
