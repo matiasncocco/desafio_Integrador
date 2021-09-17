@@ -1,39 +1,38 @@
-module.exports = (sequelize, DataTypes) => {
-    let alias = 'Cancion';
-    let columns = {
+module.exports = function(sequelize, dataTypes) {
+    
+    let alias = "Cancion";
+
+    let cols = {
         id: {
-            autoIncrement: true,
+            type: dataTypes.INTEGER,
             primaryKey: true,
-            type: DataTypes.INTEGER.UNSIGNED,
-            allowNull: false
+            autoIncrement: true        
         },
         titulo: {
-            type: DataTypes.STRING(255),
-            allowNull: false,
-            unique: true
+            type: dataTypes.STRING
         },
         duracion: {
-            type: DataTypes.INTEGER.UNSIGNED,
-            allowNull: true
+            type: dataTypes.INTEGER
         },
-        createdAt: 'created_at',
-        updatedAt: 'updated_at'
-    };
-    let config = {
-        underscored: true,
-        tableName: 'canciones',
-        timestamps: true,
-        paranoid: true,
-        charset: 'utf8',
-        dialectOptions: {
-            collate: 'utf8mb4_unicode:ci'
+        genero_id: {
+            type: dataTypes.INTEGER
+        },
+        artista_id:{
+            type: dataTypes.INTEGER
+        },
+        album_id:{
+            type: dataTypes.INTEGER
         }
-    };
-    let Cancion = sequelize.define(
-        alias,
-        columns,
-        config
-    );
+
+    }
+
+    let config = {
+        tableName: "canciones",
+        timestamps: false
+    }
+    
+    
+    let Cancion = sequelize.define(alias, cols, config);
 
     Cancion.associate = function(models) {
         Cancion.belongsTo(models.Artista,{
@@ -49,6 +48,6 @@ module.exports = (sequelize, DataTypes) => {
             foreingKey:"album_id"
         });
     }
-    
-    return Cancion;
-};
+
+    return Cancion
+}

@@ -2,15 +2,29 @@ let db = require('../database/models');
 
 const controlador = {
 
-    index: (req,res) => {
-        res.render('../views/home');
-    },
-    listado: (req,res) => {
-        db.Album.findAll()
-         .then(function(albumes){
-             res.render('../views/home' , {peliculas:peliculas});
-         })
+    listado: function(req, res){
+        db.Cancion.findAll({
+            attributes: 
+            [
+                'id',
+                'titulo', 
+                'duracion', 
+                'genero_id', 
+                'artista_id', 
+                'album_id'
+            ]
+        })
+        .then(canciones => {
+            console.log("Lista ok");
+            return res.json({
+                total: canciones.length,
+                data: canciones,
+                status: 200
+            })
+        });
     }
+
 }
 
 module.exports = controlador
+
