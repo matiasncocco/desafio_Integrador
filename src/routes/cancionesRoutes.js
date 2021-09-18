@@ -13,7 +13,7 @@ router.get("/:id", mainController.detail)
 
 router.put("/:id", mainController.edit)
 
-// router.delete("/:id", mainController.delete)
+router.delete("/:id", mainController.delete)
 
 
 module.exports = router 

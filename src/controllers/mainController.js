@@ -89,7 +89,7 @@ const controlador = {
              'nombre'
             ],
             include:[
-              'canciones'
+            'canciones'
             ]
         
         })
