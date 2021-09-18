@@ -1,4 +1,5 @@
 let db = require('../database/models');
+const Cancion = require('../database/models/Cancion');
 
 const controlador = {
 
@@ -11,11 +12,13 @@ const controlador = {
         })
         .then(canciones => {
             return res.json(canciones)
-        });
+        })
+        .catch(error =>{
+            res.json(error);
+        })
     },
 
     create: function(req, res){
-        // let aux = req.body;
         db.Cancion.create({
             titulo: req.body.titulo,
             duracion: req.body.duracion,
@@ -35,21 +38,14 @@ const controlador = {
     },
 
     detail: function(req,res){
-         db.Cancion.findByPk(req.params.id,{
-            attributes: 
-            [
-                'id',
-                'titulo', 
-                'duracion', 
-                'genero_id', 
-                'artista_id', 
-                'album_id'
-            ]
-            })
+         db.Cancion.findByPk(req.params.id)
                 .then(cancion =>{
                     console.log("Detail works!");
                     return res.json(cancion);
-                });
+                })
+                .catch(error =>{
+                    res.json(error);
+                })
             },
     
     edit: function(req,res){
@@ -64,8 +60,8 @@ const controlador = {
                 where: {
                     id: req.params.id
                        }
-                }
-                );
+                }).then(() => res.status(200).json("Holu"))
+                  
                 console.log(req.params.id)
             },
 
@@ -86,20 +82,16 @@ const controlador = {
         db.Album.findAll({
             attributes: 
             [
-             'nombre'
+             'nombre',
             ],
-            include:[
-            'canciones'
+            include:
+            [
+             'canciones'
             ]
         
         })
+        
         .then(albumes => {
-            console.log(albumes.canciones);
-
-            // let nombreCanciones = canciones.map(darSoloElTitulo(canciones) => 
-            //     return canciones.titulo: 
-            //     )
-
             res.json(albumes)
         })
         .catch(error =>{
@@ -110,3 +102,4 @@ const controlador = {
 }
 
 module.exports = controlador
+
