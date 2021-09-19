@@ -11,11 +11,17 @@ const controlador = {
             ]
         })
         .then(canciones => {
-            return res.json(canciones)
+                res.json({
+                list: canciones,
+                status: 200
+            })
         })
-        .catch(error =>{
-            res.json(error);
-        })
+        .catch(error => {
+            res.status(500).json({
+                status: 500,
+                error
+            });
+        });
     },
 
     create: function(req, res){
@@ -27,12 +33,18 @@ const controlador = {
             album_id: req.body.album_id
         })
 
-          .then(cancion => {
-            console.log("Create works!");
-             res.json(cancion);
-        }).catch(error =>{
-            res.json(error);
+         .then(cancion => {
+            res.json({
+            list: cancion,
+            status: 201
         })
+        })
+         .catch(error => {
+            res.status(500).json({
+                status: 500,
+                error
+            });
+        });
             
 
     },
@@ -40,12 +52,17 @@ const controlador = {
     detail: function(req,res){
          db.Cancion.findByPk(req.params.id)
                 .then(cancion =>{
-                    console.log("Detail works!");
-                    return res.json(cancion);
+                    res.json({
+                        data: cancion,
+                        status: 200
+                    })
                 })
-                .catch(error =>{
-                    res.json(error);
-                })
+                .catch(error => {
+                    res.status(500).json({
+                        status: 500,
+                        error
+                    });
+                });
             },
     
     edit: function(req,res){
@@ -60,9 +77,15 @@ const controlador = {
                 where: {
                     id: req.params.id
                        }
-                }).then(() => res.status(200).json("Holu"))
-                  
-                console.log(req.params.id)
+                }).then(() => res.status(200).json("Edition Successful"))
+                    console.log(req.params.id)
+
+                    // .catch(error => {
+                    //     res.status(500).json({
+                    //         status: 500,
+                    //         error
+                    //     });
+                    // });
             },
 
      delete: function(req,res){
@@ -72,8 +95,17 @@ const controlador = {
                     }
                 })
                 .then(cancion => {
-                    return res.json(cancion);
+                        res.json({
+                        data: cancion,
+                        status: 200
+                    })
                 })
+                .catch(error => {
+                    res.status(500).json({
+                        status: 500,
+                        error
+                    });
+                });
             },
 
    //Controlador para "/albumes"
@@ -90,13 +122,18 @@ const controlador = {
             ]
         
         })
-        
-        .then(albumes => {
-            res.json(albumes)
+        .then(cancion => {
+            res.json({
+            data: cancion,
+            status: 200
         })
-        .catch(error =>{
-            res.json(error);
         })
+        .catch(error => {
+            res.status(500).json({
+                status: 500,
+                error
+            });
+        });
     }
 
 }
