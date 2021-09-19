@@ -112,27 +112,20 @@ const controlador = {
 
     albumList: function(req, res){
         db.Album.findAll({
-            attributes: 
-            [
-             'nombre',
-            ],
-            include:
-            [
-             'canciones'
-            ]
-        
+            attributes: ['nombre'],
+            include: {
+                model: db.Cancion,
+                as: 'canciones',
+                attributes: ['titulo']
+            }
         })
-        .then(cancion => {
-            res.json({
-            data: cancion,
-            status: 200
-        })
-        })
-        .catch(error => {
-            res.status(500).json({
-                status: 500,
-                error
+        .then(albumes => {
+            res.status(200).json({
+                status: 200,
+                albumes
             });
+        }).catch(err => {
+            res.status(500).json(err)
         });
     }
 
